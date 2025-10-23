@@ -22,22 +22,18 @@ android {
 
     signingConfigs {
         release {
-            if (System.getenv('GITHUB_WORKSPACE') != null) {
-                storeFile file("${System.getenv('GITHUB_WORKSPACE')}/KEYSTORE.JKS")
-                storePassword System.getenv('KEYSTORE_PASSWORD')
-                keyAlias System.getenv('KEY_ALIAS')
-                keyPassword System.getenv('KEY_PASSWORD')
-            }
+            storeFile file("${rootDir}/keystore.key")
+            storePassword System.getenv("ANDROID_STORE_PASSWORD")
+            keyAlias "key0"
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
         }
 
         // Keys from release are being used anyway but whatever
         debug {
-            if (System.getenv('GITHUB_WORKSPACE') != null) {
-                storeFile file("${System.getenv('GITHUB_WORKSPACE')}/KEYSTORE.JKS")
-                storePassword System.getenv('KEYSTORE_PASSWORD')
-                keyAlias System.getenv('KEY_ALIAS')
-                keyPassword System.getenv('KEY_PASSWORD')
-            }
+            storeFile file("${rootDir}/keystore.key")
+            storePassword System.getenv("ANDROID_STORE_PASSWORD")
+            keyAlias "key0"
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
         }
     }
 
@@ -58,7 +54,7 @@ android {
             minifyEnabled false
             useProguard = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (signingConfigs.release.storeFile) {
+            if (System.getenv("ANDROID_STORE_PASSWORD")) {
                 signingConfig signingConfigs.release
             }
         }
