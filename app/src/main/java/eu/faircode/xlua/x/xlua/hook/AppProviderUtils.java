@@ -188,11 +188,11 @@ public class AppProviderUtils {
                     .asSnake()
                     .queryAs(AssignmentPacket.class, true, true)));
         } else {
+            // FIELD_USER contains userId (0, 10, 25, etc.), not UID, so query by exact userId
             ListUtil.addAll(assignments, filterAssignments(SQLSnake
                     .create(database, AssignmentPacket.TABLE_NAME)
                     .onlyReturn(AssignmentPacket.FIELD_USER, AssignmentPacket.FIELD_CATEGORY, AssignmentPacket.FIELD_HOOK, AssignmentPacket.FIELD_INSTALLED, AssignmentPacket.FIELD_USED, AssignmentPacket.FIELD_RESTRICTED, AssignmentPacket.FIELD_EXCEPTION)
-                    .whereColumn(AssignmentPacket.FIELD_USER, start, ">=")
-                    .whereColumn(AssignmentPacket.FIELD_USER, end, "<=")
+                    .whereColumn(AssignmentPacket.FIELD_USER, userId)
                     .asSnake()
                     .queryAs(AssignmentPacket.class, true, true)));
         }
